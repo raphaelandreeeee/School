@@ -125,12 +125,15 @@ class LinkedList:
         return False
 
     def __len__(self) -> int:
+        """
+        Returns the length of the linked list.
+        """
         return self.size
 
     def __repr__(self) -> str:
         """
         Returns a visual representation of the linked list.
-        You can use a display method to print the linked list but this is more elegant.
+        You can use a display method to print the linked list but using a representation dunder method is more formal.
         """
         l = []
         current = self.head
