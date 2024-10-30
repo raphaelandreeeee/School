@@ -5,49 +5,98 @@ First element inserted into the queue is the first one to be removed.
 """
 
 
+class Node:
+    """
+    Creates a node. A node is a single element in a queue.
+    The next_node attribute points to the next node in the queue.
+    """
+
+    def __init__(self, data=None) -> None:
+        self.data = data
+        self.next_node = None
+
+    def __repr__(self) -> str:
+        """
+        Returns a visual representation of the node.
+        """
+        return f"Node: {self.data}"
+
+
 class Queue:
     def __init__(self) -> None:
-        self.queue = []
+        self.first = None
+        self.size = 0
 
     def enqueue(self, data) -> None:
         """
-        Adds an element to the end of the queue.
+        Inserts a data in the first of the queue.
         """
-        self.queue = self.queue + [data]
+        node = Node(data)
+        self.size += 1
+
+        if self.first is None:
+            self.first = node
+        else:
+            current = self.first
+            while current:
+                if current.next_node is None:
+                    break
+                current = current.next_node
+            current.next_node = node
 
     def dequeue(self) -> None:
         """
-        Removes the first element from the queue.
+        Removes a data in the first of the queue.
         """
-        if not self.is_empty():
-            del self.queue[0]
+        current = self.first
+        self.first = current.next_node
+        current = None
+
+        self.size -= 1
 
     def is_empty(self) -> bool:
         """
-        Checks if the queue is empty.
+        Returns True if the queue is empty. Returns False otherwise.
         """
-        return not self.queue
+        return self.first is None
+
+    def __len__(self) -> int:
+        """
+        Returns the size of the queue.
+        """
+        return self.size
 
     def __repr__(self) -> str:
         """
         Returns a visual representation of the queue.
         """
-        return f"Queue: {self.queue}"
+        current = self.first
+        container = ""
+
+        while current:
+            container = container + f"{current.data}, "
+            if current.next_node is None:
+                break
+            current = current.next_node
+
+        return f"[{container}]"
 
 
 if __name__ == "__main__":
     queue = Queue()
-    queue.enqueue(1)
-    queue.enqueue(2)
-    queue.enqueue(3)
-    print(queue)                    # Output: Queue: [1, 2, 3]
+
+    queue.enqueue(10)
+    print(queue)
+
+    queue.enqueue(20)
+    queue.enqueue(30)
+    queue.enqueue(40)
+    queue.enqueue(50)
+    print(queue)
 
     queue.dequeue()
-    print(queue)                    # Output: Queue: [2, 3]
+    print(queue)
 
-    queue.dequeue()
-    print(queue)                    # Output: Queue: [3]
+    print(queue.is_empty())
 
-    queue.dequeue()
-    print(queue)                    # Output: Queue: []z
-    print(queue.is_empty())         # Output: True
+    print(queue.__len__())
