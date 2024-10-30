@@ -21,6 +21,7 @@ class Node:
 
 
 class LinkedList:
+
     def __init__(self) -> None:
         self.head = None
         self.size = 0
@@ -44,7 +45,6 @@ class LinkedList:
         """
         Appends a node to the start of the linked list.
         """
-
         node = Node(data)
         self.size += 1
 
