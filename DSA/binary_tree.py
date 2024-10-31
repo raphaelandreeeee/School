@@ -1,30 +1,50 @@
 """
-Binary Tree Implementation in Python
+Basic Binary Tree Implementation in Python
 """
 
 
-class Node:
+class TreeNode:
+
     def __init__(self, data) -> None:
         self.data = data
         self.left = None
         self.right = None
 
     def insert(self, data) -> None:
-        if data < self.data:
-            if self.left is None:
-                self.left = Node(data)
-            else:
-                self.left.insert(data)
-        elif data > self.data:
-            if self.right is None:
-                self.right = Node(data)
-            else:
-                self.right.insert(data)
+        """
+        Inserts a node at the left or right of the root tree.
+        Self balancing.
+        """
+        if self.left is None:
+            self.left = TreeNode(data)
+        elif self.right is None:
+            self.right = TreeNode(data)
+        elif self.left.left is not None:
+            self.right.insert(data)
+        else:
+            self.left.insert(data)
 
-    def __repr__(self) -> str:
-        return f"Node: {self.data}"
+    def tree_traversal(self) -> None:
+        """
+        Displays the nodes of the tree from bottom-up, leftmost node first.
+        """
+        if self.left is not None:
+            self.left.tree_traversal()
+
+        print(self.data)
+
+        if self.right is not None:
+            self.right.tree_traversal()
 
 
-class Tree:
-    def __init__(self) -> None:
-        self.root = None
+# Test case.
+if __name__ == "__main__":
+    tree = TreeNode(1)
+
+    tree.insert(10)
+    tree.insert(20)
+    tree.insert(30)
+    tree.insert(40)
+    tree.insert(50)
+
+    tree.tree_traversal()
