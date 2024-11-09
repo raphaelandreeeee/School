@@ -39,7 +39,7 @@ class MyQueue:
         Peeks the first person on the queue.
         """
         
-        return f"{self.first.name.title()} is entering the room."
+        return f"{self.first.name} is entering the room."
     
     def begin_consultation(self) -> str:
         """
