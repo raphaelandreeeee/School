@@ -74,7 +74,10 @@ if __name__ == '__main__':
 
         # Add notebook option.
         if user_input == 1:
-            name = str(input("Enter name for notebook: "))
+            name = str(input("Enter name for notebook: ")) 
+            notebooks.add_notebook(name)
+
+            print(f"\nNotebook Added!\n")
 
         # Check notebook option.
         elif user_input == 2:
@@ -90,7 +93,9 @@ if __name__ == '__main__':
             if notebooks.is_empty():
                 print("No notebooks available.")
             else:
-                print(notebooks.peek_notebook())
+                notebook = notebooks.peek_notebook()
+
+                print(f"{notebook}'s is at the top.")
         
         # Check all notebooks option.
         elif user_input == 4:
@@ -100,7 +105,7 @@ if __name__ == '__main__':
                 stack = notebooks.check_all()
 
                 for notebook in reversed(stack):
-                    print(notebook)
+                    print(f"{notebook}'s is being checked.")
 
         # Exit console loop.
         else:
