@@ -9,42 +9,67 @@ class TreeNode:
         self.data = data
         self.left = None
         self.right = None
-
-    def insert(self, data) -> None:
-        """
-        Inserts a node at the left or right of the root tree.
-        Self balancing.
-        """
-        if self.left is None:
-            self.left = TreeNode(data)
-        elif self.right is None:
-            self.right = TreeNode(data)
-        elif self.left.left is not None:
-            self.right.insert(data)
+    
+    def add(self, data) -> None:
+        if self.data > data:
+            if self.left is None:
+                self.left = TreeNode(data)
+            else:
+                self.left.add(data)
         else:
-            self.left.insert(data)
+            if self.right is None:
+                self.right = TreeNode(data)
+            else:
+                self.right.add(data)
 
-    def tree_traversal(self) -> None:
-        """
-        Displays the nodes of the tree from bottom-up, leftmost node first.
-        """
+    def inorder_traversal(self) -> list:
+        container = []
+
         if self.left is not None:
-            self.left.tree_traversal()
-
-        print(self.data)
-
+            container.extend(self.left.inorder_traversal())
+        
+        container.append(self.data)
+        
         if self.right is not None:
-            self.right.tree_traversal()
+            container.extend(self.right.inorder_traversal())
 
+        return container
+    
+    def preorder_traversal(self) -> list:
+        container = []
+
+        container.append(self.data)
+        
+        if self.left is not None:
+            container.extend(self.left.preorder_traversal())
+        
+        if self.right is not None:
+            container.extend(self.right.preorder_traversal())
+
+        return container
+
+    def postorder_traversal(self) -> list:
+        container = []
+
+        if self.left is not None:
+            container.extend(self.left.postorder_traversal())
+        
+        if self.right is not None:
+            container.extend(self.right.postorder_traversal())
+
+        container.append(self.data)
+        
+        return container
 
 # Test case.
 if __name__ == "__main__":
-    tree = TreeNode(1)
+    tree = TreeNode(30)
 
-    tree.insert(10)
-    tree.insert(20)
-    tree.insert(30)
-    tree.insert(40)
-    tree.insert(50)
+    tree.add(10)
+    tree.add(20)
+    tree.add(40)
+    tree.add(50)
 
-    tree.tree_traversal()
+    print(tree.inorder_traversal())
+    print(tree.preorder_traversal())
+    print(tree.postorder_traversal())
