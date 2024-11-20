@@ -10,21 +10,21 @@ class TreeNode:
         self.left = None
         self.right = None
     
-    def add(self, data) -> None:
+    def insert(self, data) -> None:
         """
-        Adds a node to the left of the root node if it does not exist. Adds a node to the right of the node, otherwise. Recursively adds if both nodes are not empty.
+        Inserts a node to the left of the root node if it does not exist. inserts a node to the right of the node, otherwise. Recursively inserts if both nodes are not empty.
         """
         
         if self.data > data:
             if self.left is None:
                 self.left = TreeNode(data)
             else:
-                self.left.add(data)
+                self.left.insert(data)
         else:
             if self.right is None:
                 self.right = TreeNode(data)
             else:
-                self.right.add(data)
+                self.right.insert(data)
 
     def inorder_traversal(self) -> list:
         """
@@ -81,10 +81,9 @@ class TreeNode:
 if __name__ == "__main__":
     tree = TreeNode(30)
 
-    tree.add(10)
-    tree.add(20)
-    tree.add(40)
-    tree.add(50)
+    dataset = [10, 20, 40, 50,]
+    for data in dataset:
+        tree.insert(data)
 
     print(tree.inorder_traversal())
     print(tree.preorder_traversal())

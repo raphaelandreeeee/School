@@ -130,25 +130,13 @@ class TreeNode:
 
 
 if __name__ == '__main__':
-    tree = TreeNode(30)
+    tree = TreeNode(88)
 
-    tree.insert(10)
-    tree.insert(20)
-    tree.insert(40)
-    tree.insert(50)
+    dataset = [5, 7, 15, 17, 22, 23, 32, 34, 36, 37, 38, 60, 72, 78, 86, 88, 89, 90]
 
-    print(tree.search(10))
-    print(tree.search(20))
-    print(tree.search(30))
-    print(tree.search(40))
-    print(tree.search(50))
+    for data in dataset:
+        tree.insert(data)
     
-    print(tree.minimum())
-    print(tree.maximum())
-
-    print(tree.successor(20))
-    print(tree.predeccessor(20))
-
     print(tree.inorder_traversal())
     print(tree.preorder_traversal())
     print(tree.postorder_traversal())
