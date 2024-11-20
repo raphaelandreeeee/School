@@ -20,7 +20,7 @@ class AVLTree:
             return 0
         return self._get_height(node.left) - self._get_height(node.right)
     
-    def _left_rotate(self, node) -> AVLTree:
+    def _left_rotate(self, node) -> "AVLTree":
         node_right = node.right
         tree = node_right.left
         node_right.left = node
@@ -31,7 +31,7 @@ class AVLTree:
 
         return node_right
 
-    def _right_rotate(self, node) -> AVLTree:
+    def _right_rotate(self, node) -> "AVLTree":
         node_left = node.left
         tree = node_left.right
         node_left.right = node
@@ -95,7 +95,9 @@ class AVLTree:
 if __name__ == '__main__':
     tree = AVLTree(30)
 
-    tree.insert(tree, 10)
-    tree.insert(tree, 20)
+    dataset = [10, 20, 40, 50, 60, 70, 80, 90]
+
+    for data in dataset:
+        tree = tree.insert(tree, data)
 
     print(tree.inorder_traversal())
