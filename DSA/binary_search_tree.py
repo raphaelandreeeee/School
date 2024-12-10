@@ -1,7 +1,3 @@
-"""
-Binary Search Tree Implementation in Python
-"""
-
 class TreeNode:
     def __init__(self, data) -> None:
         self.data = data
@@ -59,10 +55,6 @@ class TreeNode:
             return self.right.predeccessor(data)
 
     def insert(self, data) -> None:
-        """
-        Adds a node to the tree.
-        """
-        
         if self.data > data:
             if self.left is None:
                 self.left = TreeNode(data)
@@ -74,14 +66,29 @@ class TreeNode:
             else:
                 self.right.insert(data)
 
-    def delete(self, data) -> None:
-        pass
+    def delete(self, data):
+        if self is None:
+            return self
+
+        if data < self.data:
+            if self.left:
+                self.left = self.left.delete(data)
+        elif data > self.data:
+            if self.right:
+                self.right = self.right.delete(data)
+        else:
+            if self.left is None:
+                return self.right
+            elif self.right is None:
+                return self.left
+
+            temp = self.right.minimum()
+            self.data = temp.data
+            self.right = self.right.delete(temp.data)
+
+        return self
 
     def inorder_traversal(self) -> list:
-        """
-        Traverses the tree in ascending order.
-        """
-        
         container = []
 
         if self.left is not None:
@@ -95,10 +102,6 @@ class TreeNode:
         return container
     
     def preorder_traversal(self) -> list:
-        """
-        Traverses the tree from to root node to the left subtree then finally to the right subtree.
-        """
-        
         container = []
 
         container.append(self.data)
@@ -112,10 +115,6 @@ class TreeNode:
         return container
 
     def postorder_traversal(self) -> list:
-        """
-        Traverses the tree from the left subtree to the right subtree then finally to the root node.
-        """
-        
         container = []
 
         if self.left is not None:
@@ -136,7 +135,20 @@ if __name__ == '__main__':
 
     for data in dataset:
         tree.insert(data)
+
+    print(tree.inorder_traversal())
+
+    tree.delete(34)
+
+    print(tree.search(23))
+
+    print(tree.minimum())
+    print(tree.maximum())
+
+    print(tree.successor(23))
+    print(tree.predeccessor(23))
     
     print(tree.inorder_traversal())
     print(tree.preorder_traversal())
     print(tree.postorder_traversal())
+    

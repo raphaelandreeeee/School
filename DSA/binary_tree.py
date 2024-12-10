@@ -1,8 +1,3 @@
-"""
-Basic Binary Tree Implementation in Python
-"""
-
-
 class TreeNode:
 
     def __init__(self, data) -> None:
@@ -11,10 +6,6 @@ class TreeNode:
         self.right = None
     
     def insert(self, data) -> None:
-        """
-        Inserts a node to the left of the root node if it does not exist. inserts a node to the right of the node, otherwise. Recursively inserts if both nodes are not empty.
-        """
-        
         if self.data > data:
             if self.left is None:
                 self.left = TreeNode(data)
@@ -27,10 +18,6 @@ class TreeNode:
                 self.right.insert(data)
 
     def inorder_traversal(self) -> list:
-        """
-        Traverses the tree in ascending order.
-        """
-        
         container = []
 
         if self.left is not None:
@@ -44,10 +31,6 @@ class TreeNode:
         return container
     
     def preorder_traversal(self) -> list:
-        """
-        Traverses the tree from to root node to the left subtree then finally to the right subtree.
-        """
-        
         container = []
 
         container.append(self.data)
@@ -61,10 +44,6 @@ class TreeNode:
         return container
 
     def postorder_traversal(self) -> list:
-        """
-        Traverses the tree from the left subtree to the right subtree then finally to the root node.
-        """
-        
         container = []
 
         if self.left is not None:

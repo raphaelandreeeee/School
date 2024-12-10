@@ -1,8 +1,3 @@
-"""
-Binary Search Tree Implementation in Python
-"""
-
-
 class AVLTree:
     def __init__(self, data) -> None:
         self.data = data
@@ -75,10 +70,6 @@ class AVLTree:
             return self._left_rotate(node)
 
     def inorder_traversal(self) -> list:
-        """
-        Traverses the tree in ascending order.
-        """
-        
         container = []
 
         if self.left is not None:

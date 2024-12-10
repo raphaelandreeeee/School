@@ -1,75 +1,84 @@
 class Graph:
-    def __init__(self, size):
-        self.adj_matrix = [[0] * size for _ in range(size)]
-        self.size = size
-        self.vertex_data = [''] * size  
+    def __init__(self, directed=False):
+        self.directed = directed
+        self.adjacency_list = dict()
 
-    def add_edge(self, u, v):
-        if 0 <= u < self.size and 0 <= v < self.size:
-            self.adj_matrix[u][v] = 1
-            #self.adj_matrix[v][u] = 1
+    def __repr__(self):
+        graph = ""
 
-    def add_vertex_data(self, vertex, data):
-        if 0 <= vertex < self.size:
-            self.vertex_data[vertex] = data
+        for node, neighbors in self.adjacency_list:
+            graph += f"{node}: {neighbors}\n"
 
-    def print_graph(self):
-        print("Adjacency Matrix:")
-        for row in self.adj_matrix:
-            print(' '.join(map(str, row)))
-        print("\nVertex Data:")
-        for vertex, data in enumerate(self.vertex_data):
-            print(f"Vertex {vertex}: {data}")
-            
-    def dfs_util(self, v, visited):
-        visited[v] = True
-        print(self.vertex_data[v], end=' ')
+        return graph
 
-        for i in range(self.size):
-            if self.adj_matrix[v][i] == 1 and not visited[i]:
-                self.dfs_util(i, visited)
+    def add_node(self, node):
+        if node not in self.adjacency_list:
+            self.adjacency_list[node] = set()
+        else:
+            raise ValueError("Node already exists.")
 
-    def dfs(self, start_vertex_data):
-        visited = [False] * self.size
+    def remove_node(self, node):
+        if node not in self.adjacency_list:
+            raise ValueError("Node does not exists.")
+        else:
+            for neighbors in self.adjacency_list.values():
+                neighbors.discard(node)
 
-        start_vertex = self.vertex_data.index(start_vertex_data)
-        self.dfs_util(start_vertex, visited)
+            del self.adjacency_list[node]
+
+    def add_edge(self, from_node, to_node, weight=None):
+        if from_node not in self.adjacency_list:
+            raise ValueError("Node does not exists.")
         
-    def bfs(self, start_vertex_data):
-        queue = [self.vertex_data.index(start_vertex_data)]
-        visited = [False] * self.size
-        visited[queue[0]] = True
+        if to_node not in self.adjacency_list:
+            raise ValueError("Node does not exists.")
         
-        while queue:
-            current_vertex = queue.pop(0)
-            print(self.vertex_data[current_vertex], end=' ')
-            
-            for i in range(self.size):
-                if self.adj_matrix[current_vertex][i] == 1 and not visited[i]:
-                    queue.append(i)
-                    visited[i] = True
+        if weight is None:
+            self.adjacency_list[from_node].add(to_node)
+
+            if not self.directed:
+                self.adjacency_list[to_node].add(from_node)
+
+        else:
+            self.adjacency_list[from_node].add((to_node, weight))
+
+            if not self.directed:
+                self.adjacency_list[to_node].add((from_node, weight))
+
+    def remove_edge(self, from_node, to_node):
+        if from_node in self.adjacency_list:
+            if to_node in self.adjacency_list[from_node]:
+                self.adjacency_list[from_node].remove(to_node)
+            else:
+                raise ValueError("Edge does not exists.")
+        else:
+            raise ValueError("Node does not exists.")
+
+    def get_neighbors(self, node):
+        return self.adjacency_list.get(node, set())
+
+    def has_node(self, node):
+        return node in self.adjacency_list
+
+    def has_edge(self,from_node, to_node):
+        if from_node in self.adjacency_list:
+            return to_node in self.adjacency_list[from_node]
+        return False
+    
+    def get_nodes(self): 
+        return list(self.adjacency_list.keys())
+    
+    def get_edges(self):
+        return [(from_node, to_node) for from_node, neighbors in self.adjacency_list.items() for to_node in neighbors]
+
+    def bfs(self, node):
+        pass
+
+    def dfs(self, node):
+        pass
 
 
 if __name__ == '__main__':
-    graph = Graph(7)
+    graph = Graph()
 
-    vertex_set = [(num, string) for num, string in zip(range(7), "ABCDEFG")]
-    for data in vertex_set:
-        graph.add_vertex_data(data[0], data[1])
-
-    graph.add_edge(3, 0)  
-    graph.add_edge(3, 4)  
-    graph.add_edge(4, 0)  
-    graph.add_edge(0, 2)  
-    graph.add_edge(2, 5)  
-    graph.add_edge(2, 6)  
-    graph.add_edge(5, 1)  
-    graph.add_edge(1, 2)  
-
-    graph.print_graph()
-
-    print("\nDepth First Search starting from vertex D:")
-    graph.dfs('D')
-
-    print("\n\nBreadth First Search starting from vertex D:")
-    graph.bfs('D')
+    graph.add_node()
