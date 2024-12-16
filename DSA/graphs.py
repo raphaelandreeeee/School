@@ -1,4 +1,5 @@
 class Graph:
+
     def __init__(self, directed=False):
         self.directed = directed
         self.adjacency_list = dict()
@@ -6,7 +7,7 @@ class Graph:
     def __repr__(self):
         graph = ""
 
-        for node, neighbors in self.adjacency_list:
+        for node, neighbors in self.adjacency_list.items():
             graph += f"{node}: {neighbors}\n"
 
         return graph
@@ -38,7 +39,6 @@ class Graph:
 
             if not self.directed:
                 self.adjacency_list[to_node].add(from_node)
-
         else:
             self.adjacency_list[from_node].add((to_node, weight))
 
@@ -71,14 +71,70 @@ class Graph:
     def get_edges(self):
         return [(from_node, to_node) for from_node, neighbors in self.adjacency_list.items() for to_node in neighbors]
 
-    def bfs(self, node):
-        pass
+    def bfs(self, from_node):
+        visited = set()
+        queue = [from_node]
+        order = []
 
-    def dfs(self, node):
-        pass
+        while queue:
+            node = queue.pop(0)
+
+            if node not in visited:
+                visited.add(node)
+                order.append(node)
+
+                neighbors = self.get_neighbors(node)
+                for neighbor in neighbors:
+                    if isinstance(neighbor, tuple):
+                        neighbor = neighbor[0]
+                    
+                    if neighbor not in visited:
+                        queue.append(neighbor)
+
+        return order
+
+    def dfs(self, from_node):
+        visited = set()
+        stack = [from_node]
+        order = []
+
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                visited.add(node)
+                order.append(node)
+
+                neighbors = self.get_neighbors(node)
+                for neighbor in sorted(neighbors, reverse=True):
+                    if isinstance(neighbor, tuple):
+                        neighbor = neighbor[0]
+                    
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+
+        return order
 
 
 if __name__ == '__main__':
     graph = Graph()
 
-    graph.add_node()
+    graph.add_node("A")
+    graph.add_node("B")
+    graph.add_node("C")
+    graph.add_node("D")
+    graph.add_node("E")
+    graph.add_node("F")
+    graph.add_node("G")
+    
+    graph.add_edge("A", "B", 1)
+    graph.add_edge("A", "C", 1)
+    graph.add_edge("D", "C", 1)
+    graph.add_edge("D", "E", 1)
+    graph.add_edge("F", "E", 1)
+    graph.add_edge("F", "G", 1)
+    graph.add_edge("F", "B", 100)
+
+    print(graph)
+
+    print(graph.dfs("F"))
+    print(graph.bfs("F"))

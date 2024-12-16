@@ -78,3 +78,5 @@ if __name__ == '__main__':
     print(hashtable)
 
     print(hashtable.search(2))
+
+    print(hashtable.hash_table[0])
